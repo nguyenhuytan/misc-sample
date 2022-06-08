@@ -10,18 +10,26 @@ import software.amazon.awssdk.services.translate.model.TranslateTextRequest;
 import software.amazon.awssdk.services.translate.model.TranslateTextResponse;
 
 /**
- * AWS Translate API Sample
  * 
- * Repo: https://mvnrepository.com/artifact/software.amazon.awssdk/translate
+ * @author HuyTan
  * 
- * @author nguyenhuytan
+ *         AWS Document
+ *         https://docs.aws.amazon.com/translate/latest/dg/API_TranslateText.html
+ * 
+ *         Sample URL
+ *         https://docs.aws.amazon.com/code-samples/latest/catalog/javav2-translate-pom.xml.html
+ *         https://docs.aws.amazon.com/code-samples/latest/catalog/javav2-translate-src-main-java-com-example-translate-TranslateText.java.html
  *
  */
-
-public class TranslateUtils {
+public class TranslateSample {
 	// AWS Config
 	static final String AWS_ACCESS_KEY = "";
 	static final String AWS_SECRET_KEY = "";
+
+	public static void main(String[] args) {
+		// print output
+		System.out.println(translate("こにちは！", "ja", "en"));
+	}
 
 	/**
 	 * Translate
