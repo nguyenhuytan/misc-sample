@@ -28,7 +28,7 @@ public class TranslateSample {
 
 	public static void main(String[] args) {
 		// print output
-		System.out.println(translate("こにちは！", "ja", "en"));
+		System.out.println(translate("こんにちは！", "ja", "en"));
 	}
 
 	/**
