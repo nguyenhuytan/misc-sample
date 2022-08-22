@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp"
+      - "8089:80/tcp"
+    environment:
+      TZ: 'Asia/Ho_Chi_Minh'
+      WEBPASSWORD: 'password00'
+      DNS1: "8.8.8.8"
+      DNS2: "8.8.4.4"
+    volumes:
+      - './pihole/etc-pihole:/etc/pihole'
+      - './pihole/etc-dnsmasq.d:/etc/dnsmasq.d'
+    restart: unless-stopped
+    networks:
+      - pihole-net
+networks:
+  pihole-net:
+    driver: bridge

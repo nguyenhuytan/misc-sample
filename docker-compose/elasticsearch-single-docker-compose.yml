@@ -1,0 +1,48 @@
+version: '2'
+services:
+  elasticsearch:
+    image: docker.io/elasticsearch:7.13.4
+    container_name: elasticsearch
+    ports: 
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - ELASTIC_PASSWORD="testuser@testuser"
+      - discovery.type=single-node
+      - xpack.security.enabled=true
+      - path.data=/usr/share/elasticsearch/data
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
+      - TZ=Asia/Ho_Chi_Minh
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    mem_limit: 4g
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+      - ./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+
+  kibana:
+    image: docker.io/kibana:7.13.4
+    container_name: kibana
+    ports: 
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_USERNAME=testuser
+      - ELASTICSEARCH_PASSWORD="testuser@testuser"
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - SERVER_NAME=kibana
+      - XPACK_SECURITY_ENABLED=true
+      - PATH_DATA=/usr/share/kibana/data
+    volumes:
+      - kidata:/usr/share/kibana/data
+    links:
+      - elasticsearch
+    mem_limit: 1g
+    depends_on:
+      - elasticsearch
+
+volumes:
+  esdata:
+  kidata:

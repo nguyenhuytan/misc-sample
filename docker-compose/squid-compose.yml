@@ -1,0 +1,9 @@
+version: '3'
+services:
+  squid:
+    image: datadog/squid:latest
+    container_name: squid
+    ports: 
+      - "3128:3128"
+    volumes:
+      - ./squid/squid.conf:/etc/squid/squid.conf

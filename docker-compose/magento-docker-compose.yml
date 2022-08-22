@@ -1,0 +1,42 @@
+version: '2'
+services:
+  mariadb_m:
+    container_name: mariadb_m
+    image: docker.io/bitnami/mariadb:10.5
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_USER=bn_magento
+      - MARIADB_DATABASE=bitnami_magento
+    volumes:
+      - 'mariadb_m_data:/bitnami/mariadb'
+      
+  elasticsearch_m:
+    container_name: elasticsearch_m
+    image: docker.io/bitnami/elasticsearch:7.13.4
+    volumes:
+      - 'elasticsearch_m_data:/bitnami/elasticsearch/data'
+      
+  magento:
+    container_name: magento
+    image: docker.io/bitnami/magento:2.4.2
+    ports:
+      - '8080:8080'
+      - '8043:8443'
+    environment:
+      - MAGENTO_HOST=10.0.4.112
+      - MAGENTO_DATABASE_HOST=mariadb_m
+      - MAGENTO_DATABASE_PORT_NUMBER=3306
+      - MAGENTO_DATABASE_USER=bn_magento
+      - MAGENTO_DATABASE_NAME=bitnami_magento
+      - ELASTICSEARCH_HOST=elasticsearch_m
+      - ELASTICSEARCH_PORT_NUMBER=9200
+      - ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - 'magento_data:/bitnami/magento'
+    depends_on:
+      - mariadb_m
+      
+volumes:
+  mariadb_m_data:
+  magento_data:
+  elasticsearch_m_data:
