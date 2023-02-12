@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    ports:
+      - 443:443
+    restart: always
+    volumes:
+      - ./nginx/sites/:/etc/nginx/conf.d/:ro
+      - ./nginx/cert/:/etc/nginx/cert/:ro

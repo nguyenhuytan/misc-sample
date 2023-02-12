@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  minio:
+    image: minio/minio
+    restart: unless-stopped
+    container_name: minio
+    command: server /data --console-address ":9001"
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    environment:
+      - MINIO_ROOT_USER=devuser
+      - MINIO_ROOT_PASSWORD=devuser00
+      - MINIO_REGION=hn-1
+    volumes:
+      - 'minio_data:/data'
+
+volumes:
+  minio_data:
+    driver: local
